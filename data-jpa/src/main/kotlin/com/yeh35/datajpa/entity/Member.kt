@@ -17,8 +17,8 @@ class Member {
     var age: Int
         private set
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     var team: Team
         private set
 

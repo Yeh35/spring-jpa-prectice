@@ -36,11 +36,12 @@ internal class MemberTest {
         em.close()
 
         //확인
+        println("============================================")
         val members = em.createQuery("SELECT m FROM Member m", Member::class.java).resultList
 
         members.forEach { m ->
-            println("member = $m")
-            println("=> member.team = ${m.team}")
+            println("member = ${m} / ${m.username}")
+            println("=> member.team = ${m.team} / ${m.team.name}")
         }
 
     }
