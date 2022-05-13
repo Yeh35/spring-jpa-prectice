@@ -1,6 +1,7 @@
 package com.yeh35.datajpa.repository
 
 import com.yeh35.datajpa.entity.Member
+import com.yeh35.datajpa.entity.Team
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -15,7 +16,8 @@ internal class MemberRepositoryTest {
 
     @Test
     fun save() {
-        val member = Member("김삿갓")
+        val team = Team("Team")
+        val member = Member("김삿갓", 15, team)
         val saveMember = memberRepository.save(member)
 
         val findMember = memberRepository.findById(saveMember.id).get()
