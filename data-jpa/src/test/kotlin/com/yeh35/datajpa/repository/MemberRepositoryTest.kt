@@ -10,7 +10,11 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Slice
 import org.springframework.data.domain.Sort
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
+import javax.transaction.Transactional
 
+@Transactional
 @SpringBootTest
 internal class MemberRepositoryTest {
 
@@ -19,6 +23,9 @@ internal class MemberRepositoryTest {
 
     @Autowired
     private lateinit var teamRepository: TeamRepository
+
+    @PersistenceContext
+    private lateinit var em: EntityManager
 
     @Test
     fun classCheck() {
@@ -131,17 +138,25 @@ internal class MemberRepositoryTest {
     }
 
     @Test
-    @Throws(java.lang.Exception::class)
-    fun bulkUpdate() {
-        //given
-        memberRepository.save(Member("member1", 10))
-        memberRepository.save(Member("member2", 19))
-        memberRepository.save(Member("member3", 20))
-        memberRepository.save(Member("member4", 21))
-        memberRepository.save(Member("member5", 40))
+    fun testBaseEntity() {
+        val teamA = Team("Team A")
+        teamRepository.save(teamA)
+
+        val member = Member("member", 10, teamA)
+        memberRepository.save(member)
+
+        Thread.sleep(100)
+        member.changeUsername("member-ch")
+        em.flush() //@PreUpdate
+        em.clear()
+
         //when
-        val resultCount = memberRepository.bulkAgePlus(20)
+        val findMember = memberRepository.findById(member.id).get()
+
         //then
-        assertThat(resultCount).isEqualTo(3)
+        println("findMember.createdDate = " + findMember.createdDate)
+        println("findMember.lastModifiedDate = " + findMember.lastModifiedDate)
+        println("findMember.createdBy = " + findMember.createdBy)
+        println("findMember.lastModifiedBy = " + findMember.lastModifiedBy)
     }
 }

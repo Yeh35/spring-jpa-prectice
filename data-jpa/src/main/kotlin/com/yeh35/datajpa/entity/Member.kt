@@ -3,7 +3,7 @@ package com.yeh35.datajpa.entity
 import javax.persistence.*
 
 @Entity
-class Member {
+class Member : BaseEntity {
 
     @Id
     @GeneratedValue

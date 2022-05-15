@@ -43,7 +43,8 @@ internal class MemberTest {
             println("member = ${m} / ${m.username}")
             println("=> member.team = ${m.team} / ${m.team!!.name}")
         }
-
     }
+
+
 
 }
