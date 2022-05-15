@@ -19,10 +19,10 @@ class Member {
 
     @JoinColumn(name = "team_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    var team: Team
+    var team: Team?
         private set
 
-    constructor(username: String, age: Int, team: Team) {
+    constructor(username: String, age: Int, team: Team? = null) {
         this.username = username
         this.age = age
         this.team = team
@@ -33,9 +33,9 @@ class Member {
     }
 
     fun changeTeam(team: Team) {
-        val oldList = this.team.members.toMutableList()
+        val oldList = this.team!!.members.toMutableList()
         oldList.remove(this)
-        this.team.changeMembers(oldList)
+        this.team!!.changeMembers(oldList)
 
         val newList = team.members.toMutableList()
         newList.add(this)

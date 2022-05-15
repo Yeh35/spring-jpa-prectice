@@ -6,6 +6,7 @@ import java.util.*
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
+@Suppress("UNCHECKED_CAST")
 @Repository
 class MemberJpaRepository {
     @PersistenceContext
@@ -36,5 +37,14 @@ class MemberJpaRepository {
 
     fun find(id: Long?): Member {
         return em!!.find(Member::class.java, id)
+    }
+
+    fun findByPage(age: Int, offset: Int, limit: Int): List<Member> {
+        val resultList = em!!.createQuery("SELECT m FROM Member m where m.age = :age order by m.username desc")
+            .setParameter("age", age)
+            .setFirstResult(offset)
+            .setMaxResults(limit)
+            .resultList as MutableList<Member>
+        return resultList.toList()
     }
 }

@@ -41,7 +41,7 @@ internal class MemberTest {
 
         members.forEach { m ->
             println("member = ${m} / ${m.username}")
-            println("=> member.team = ${m.team} / ${m.team.name}")
+            println("=> member.team = ${m.team} / ${m.team!!.name}")
         }
 
     }
