@@ -30,7 +30,8 @@ class MemberJpaRepository {
     }
 
     fun count(): Long {
-        return em!!.createQuery("select count(m) from Member m", Long::class.java).singleResult
+        val singleResult = em!!.createQuery("select count(m) from Member m").singleResult
+        return singleResult.toString().toLong()
     }
 
     fun find(id: Long?): Member {

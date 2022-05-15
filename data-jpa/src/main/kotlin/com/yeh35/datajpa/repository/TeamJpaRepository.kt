@@ -31,6 +31,7 @@ class TeamJpaRepository {
     }
 
     fun count(): Long {
-        return em!!.createQuery("select count(t) from Team t", Long::class.java).singleResult
+        val singleResult = em!!.createQuery("select count(t) from Team t").singleResult
+        return singleResult.toString().toLong()
     }
 }

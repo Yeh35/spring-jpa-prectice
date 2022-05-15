@@ -32,6 +32,4 @@ class Team {
         }
         this.members = members
     }
-
-
 }
